@@ -7,6 +7,7 @@ def makeInvoices(numFiles):
 
     # Invoice loop
     for i in range(numFiles):
+        
         # Create Randomized invoice
         invoiceNum = "100" + str(i).zfill(4)
         productList = {}
@@ -16,21 +17,18 @@ def makeInvoices(numFiles):
                 productList[product] += 1
             else:
                 productList[product] = 1
-
-        # Calculate total number of products
-        total_products = sum(productList.values())
-        
         subtot = round(random.random()*10**(random.randint(3, 4)), 2)
         tax = round(subtot*0.13, 2)
         total = round(subtot + tax, 2)
 
         # Create doc from random invoice
         aDoc = Document()
-        aDoc.add_heading("INV:" + invoiceNum)
-        pProd = aDoc.add_paragraph("PRODUCTS:\n")
-        for key, value in productList.items():
-            pProd.add_run(f"{key}:{value}\n")
-        aDoc.add_paragraph(f"SUBTOTAL:{subtot}\nTAX:{tax}\nTOTAL:{total}\nTOTAL_PRODUCTS:{total_products}")
+        aDoc.add_heading("INV" + invoiceNum)
+        pProd = aDoc.add_paragraph("PRODUCTS\n")
+        for key in productList.keys():
+            pProd.add_run(f"{key}:{productList[key]}\n")
+        aDoc.add_paragraph(f"SUBTOTAL:{subtot}\nTAX:{tax}\nTOTAL:{total}")
         aDoc.save(f"INV{invoiceNum}.docx")
+
 
 makeInvoices(200)
