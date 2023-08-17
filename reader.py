@@ -3,13 +3,16 @@ import os
 import openpyxl
 
 def generate_report():
+     # Name of the output Excel file
     excel_file = "invoice_report.xlsx"
+    # Creating a new Excel workbook and setting the active worksheet
     workbook = openpyxl.Workbook()
     worksheet = workbook.active
+    # Adding headers to the Excel sheet
     worksheet.append(['Invoice ID', 'Total Quantity', 'Subtotal', 'Tax', 'Total'])
-
+ # Loop through all files in the current directory
     for file_name in os.listdir('.'):
-        if file_name.endswith('.docx'):
+        if file_name.endswith('.docx'):  # Process only files that have a .docx extension
             doc = Document(file_name)
 
             # Extract Invoice ID
